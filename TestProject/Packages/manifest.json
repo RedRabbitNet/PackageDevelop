@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.red-rabbit-net.script-layout": "https://github.com/RedRabbitNet/PackageDevelop.git?path=/Packages/ScriptLayout",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.0",
@@ -37,7 +38,12 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.red-rabbit-net.script-layout": "file:../../Packages/ScriptLayout"
+    "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.red-rabbit-net.script-layout": {
+      "revision": "HEAD",
+      "hash": "68124aa7f6e5abc760b2d56e82139bfe207e6d88"
+    }
   }
 }
