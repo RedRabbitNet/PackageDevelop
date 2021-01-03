@@ -6,6 +6,7 @@ using UnityEngine;
 
 /// <summary>
 /// シングルトンを実現するための抽象クラス
+/// シーン上のオブジェクトにアタッチせず、スクリプトからの呼び出しのみ許可する
 /// </summary>
 public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {

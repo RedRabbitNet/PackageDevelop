@@ -1,8 +1,8 @@
-﻿{
-    "name": "com.red-rabbit-net.script-layout",
-    "displayName": "ScriptLayout",
-    "version": "1.0.0",
-    "unity": "2019.3",
-    "description": "Sngleton等の各種設計を扱うためのパッケージ",
-    "dependencies": {}
+{
+  "name": "com.red-rabbit-net.script-layout", 
+  "displayName": "ScriptLayout", 
+  "version": "1.0.0", 
+  "unity": "2019.3", 
+  "description": "Sngleton等の各種設計を扱うためのパッケージ", 
+  "dependencies": {}
 }
