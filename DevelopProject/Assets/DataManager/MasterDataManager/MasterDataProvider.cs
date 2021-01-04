@@ -12,19 +12,15 @@ using Utility;
 public class MasterDataProvider<DataType> : IMasterDataProvider<DataType>
 {
     public List<DataType> DataList { get; set; }
-
-    // public List<DataType> dataList;
     private string dataPath;
 
-    public MasterDataProvider(string path)//, List<DataType> list)
+    public MasterDataProvider(string path)
     {
-        // dataList = new List<DataType>();
-        // dataList = list;
         dataPath = path;
     }
 
     public void LoadData()
     {
-        DataList = FileUtility.LoadJson<List<DataType>>(dataPath);
+        DataList = FileUtility.LoadResourcesJson<List<DataType>>(dataPath);
     }
 }

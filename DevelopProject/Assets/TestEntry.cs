@@ -7,5 +7,6 @@ public class TestEntry : MonoBehaviour
     void Start()
     {
         MasterDataManagerSample.Instance.Initialize();
+        UserDataManagerSample.Instance.Initialize();
     }
 }
