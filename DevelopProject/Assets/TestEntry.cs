@@ -6,6 +6,6 @@ public class TestEntry : MonoBehaviour
 {
     void Start()
     {
-        MasterDataManager.Instance.Initialize();
+        MasterDataManagerSample.Instance.Initialize();
     }
 }

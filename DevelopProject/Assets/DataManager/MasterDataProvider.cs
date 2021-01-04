@@ -6,11 +6,14 @@ using Utility;
 
 /// <summary>
 /// ここに定義を記述する
+/// 機能を追加する場合、IMasterDataProviderにも追加する
 /// ProviderはDataManagerでしか生成しない
 /// </summary>
-public class MasterDataProvider<DataType> : IMasterDataProvider
+public class MasterDataProvider<DataType> : IMasterDataProvider<DataType>
 {
-    // private List<DataType> dataList;
+    public List<DataType> DataList { get; set; }
+
+    // public List<DataType> dataList;
     private string dataPath;
 
     public MasterDataProvider(string path)//, List<DataType> list)
@@ -22,9 +25,6 @@ public class MasterDataProvider<DataType> : IMasterDataProvider
 
     public void LoadData()
     {
-        // dataList = FileUtility.LoadJson<List<DataType>>(dataPath);    //ここをList内のデータだけコピーするようにしないとリストが上書きされる
-
-        Debug.Log("LoadData:" + typeof(DataType).Name);
-        // Debug.Log(JsonUtilityExtend.ToJson(dataList));
+        DataList = FileUtility.LoadJson<List<DataType>>(dataPath);
     }
 }

@@ -10,3 +10,7 @@ public interface IMasterDataProvider
 {
     void LoadData();
 }
+public interface IMasterDataProvider<DataType> : IMasterDataProvider
+{
+    List<DataType> DataList { get; set; }
+}
