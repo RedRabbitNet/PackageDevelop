@@ -8,5 +8,6 @@ public class TestEntry : MonoBehaviour
     void Start()
     {
         TestManager.Instance.Initialize();
+        TestMasterDataManager.Instance.Initialize();
     }
 }
