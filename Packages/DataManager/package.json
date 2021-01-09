@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.data-manager", 
+  "displayName": "DataManager", 
+  "version": "1.0.0", 
+  "unity": "2019.3", 
+  "description": "MasterData,UserDataを扱うパッケージ", 
+  "dependencies": {}
+}

@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.file-utility", 
+  "displayName": "FileUtility", 
+  "version": "1.0.0", 
+  "unity": "2019.3", 
+  "description": "ファイル読み込み、ファイル書き込みを簡易化するパッケージ", 
+  "dependencies": {}
+}
