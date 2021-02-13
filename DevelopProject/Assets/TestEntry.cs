@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class TestEntry : MonoBehaviour
 {
-    void Start()
+    IEnumerator Start()
     {
-        MasterDataManagerSample.Instance.Initialize();
-        UserDataManagerSample.Instance.Initialize();
+        yield return StartCoroutine(SoundManager.Instance.InitializeCoroutine());
+        SoundManager.Instance.PlayWithLoad("test", AudioMixerGroupEnum.SE);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SoundManager.Instance.PlayWithLoad("test", AudioMixerGroupEnum.SE);   
+        }
     }
 }
