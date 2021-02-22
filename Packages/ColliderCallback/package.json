@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.collider-callback",
+  "displayName": "ColliderCallback",
+  "version": "1.0.0",
+  "unity": "2019.3",
+  "description": "ColliderのイベントをCallbackとして受け取るためのパッケージ",
+  "dependencies": {}
+}
