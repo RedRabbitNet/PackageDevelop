@@ -1,8 +1,8 @@
 ﻿{
-  "name": "com.red-rabbit-net.state-machine",
-  "displayName": "StateMachine",
-  "version": "1.0.0",
-  "unity": "2019.3",
-  "description": "状態遷移を簡易化するためのパッケージ",
-  "dependencies": {}
+    "name": "com.red-rabbit-net.state-machine",
+    "displayName": "StateMachine",
+    "version": "1.0.0",
+    "unity": "2019.3",
+    "description": "StateMachineを扱うパッケージ",
+    "dependencies": {}
 }
