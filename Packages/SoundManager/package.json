@@ -1,0 +1,8 @@
+﻿{
+  "name": "com.red-rabbit-net.sound-manager",
+  "displayName": "SoundManager",
+  "version": "1.0.0",
+  "unity": "2019.3",
+  "description": "音回りの機能の実装を簡易化するパッケージ",
+  "dependencies": {}
+}
