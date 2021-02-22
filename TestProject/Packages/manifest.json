@@ -3,6 +3,7 @@
     "com.red-rabbit-net.data-manager": "https://github.com/RedRabbitNet/PackageDevelop.git?path=/Packages/DataManager/",
     "com.red-rabbit-net.file-utility": "https://github.com/RedRabbitNet/PackageDevelop.git?path=/Packages/FileUtility/",
     "com.red-rabbit-net.script-layout": "https://github.com/RedRabbitNet/PackageDevelop.git?path=/Packages/ScriptLayout",
+    "com.red-rabbit-net.state-machine": "https://github.com/RedRabbitNet/PackageDevelop.git?path=/Packages/StateMachine/",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.0",
@@ -43,6 +44,14 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.red-rabbit-net.state-machine": {
+      "revision": "HEAD",
+      "hash": "dc46a1a0e4bc6d2fb193c654e0f1d5c671bce703"
+    },
+    "com.red-rabbit-net.data-manager": {
+      "revision": "HEAD",
+      "hash": "ef5bdae5f0026719da539e1e2aea7096995d45da"
+    },
     "com.red-rabbit-net.file-utility": {
       "revision": "HEAD",
       "hash": "ef5bdae5f0026719da539e1e2aea7096995d45da"
@@ -50,10 +59,6 @@
     "com.red-rabbit-net.script-layout": {
       "revision": "HEAD",
       "hash": "68124aa7f6e5abc760b2d56e82139bfe207e6d88"
-    },
-    "com.red-rabbit-net.data-manager": {
-      "revision": "HEAD",
-      "hash": "ef5bdae5f0026719da539e1e2aea7096995d45da"
     }
   }
 }

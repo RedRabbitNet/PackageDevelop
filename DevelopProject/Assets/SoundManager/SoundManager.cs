@@ -22,8 +22,8 @@ public class SoundManager : Singleton<SoundManager>
 
     private bool[] isMute;
 
-    private const float minVolume = -20.0f;    //(dB)
-    private const float maxVolume = 0.0f;      //(dB)
+    private float minVolume = -20.0f;    //(dB)
+    private float maxVolume = 0.0f;      //(dB)
 
     private Dictionary<string, AudioSource> audioSourceDictionary;    //<filename, AudioSource>
 
@@ -36,6 +36,15 @@ public class SoundManager : Singleton<SoundManager>
         audioSourceDictionary = new Dictionary<string, AudioSource>();
         isMute = new bool[Enum.GetNames(typeof(AudioMixerGroupEnum)).Length];
         yield return null;
+    }
+
+    /// <summary>
+    /// Volumeの限界値設定
+    /// </summary>
+    public void SetLimitedVolume(float setMinVolume = -20.0f, float setMaxVolume = 0.0f)
+    {
+        minVolume = setMinVolume;
+        maxVolume = setMaxVolume;
     }
     
     //-------------------------------------------------------------------------------------------------
