@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public enum AudioMixerGroupEnum
 {
@@ -26,6 +27,7 @@ public class SoundManager : Singleton<SoundManager>
     private float maxVolume = 0.0f;      //(dB)
 
     private Dictionary<string, AudioSource> audioSourceDictionary;    //<filename, AudioSource>
+    private Dictionary<string, Coroutine> playCoroutineDictionary;    //<filename, Coroutine>
 
     /// <summary>
     /// 初期化
@@ -34,8 +36,32 @@ public class SoundManager : Singleton<SoundManager>
     {
         audioMixer = Resources.Load<AudioMixer>("AudioMixer");
         audioSourceDictionary = new Dictionary<string, AudioSource>();
+        playCoroutineDictionary = new Dictionary<string, Coroutine>();
         isMute = new bool[Enum.GetNames(typeof(AudioMixerGroupEnum)).Length];
+
+        SceneManager.sceneLoaded += onSceneUnloaded;
         yield return null;
+    }
+
+    /// <summary>
+    /// シーン切り替え時の処理
+    /// </summary>
+    private void onSceneUnloaded(Scene beforeScene, LoadSceneMode loadSceneMode)
+    {
+        stopAllPlayCoroutine();
+    }
+
+    /// <summary>
+    /// 再生コルーチンの停止
+    /// あくまでもコルーチンの停止であって音源が停止しないことに注意
+    /// endActionが呼ばれなくなることに注意
+    /// </summary>
+    private void stopAllPlayCoroutine()
+    {
+        foreach (var playCoroutinePair in playCoroutineDictionary)
+        {
+            StopCoroutine(playCoroutinePair.Value);
+        }
     }
     
     //-------------------------------------------------------------------------------------------------
@@ -160,10 +186,11 @@ public class SoundManager : Singleton<SoundManager>
         
         audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
 
-        StartCoroutine(playCoroutine(audioSource, delay, () =>
+        Coroutine coroutine = StartCoroutine(playCoroutine(audioSource, delay, () =>
         {
             Destroy(audioSource.gameObject);
         }));
+        playCoroutineDictionary.Add(fileName, coroutine);
     }
     //-------------------------------------------------------------------------------------------------
     //一度にロードして保持して置いて、再生する
@@ -192,9 +219,10 @@ public class SoundManager : Singleton<SoundManager>
 
         audioSourceDictionary[fileName].outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
         
-        StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
+        Coroutine coroutine = StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
         {
         }));
+        playCoroutineDictionary.Add(fileName, coroutine);
     }
 
     /// <summary>
