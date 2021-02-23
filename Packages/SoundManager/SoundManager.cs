@@ -37,6 +37,9 @@ public class SoundManager : Singleton<SoundManager>
         isMute = new bool[Enum.GetNames(typeof(AudioMixerGroupEnum)).Length];
         yield return null;
     }
+    
+    //-------------------------------------------------------------------------------------------------
+    //設定
 
     /// <summary>
     /// Volumeの限界値設定
@@ -46,8 +49,6 @@ public class SoundManager : Singleton<SoundManager>
         minVolume = setMinVolume;
         maxVolume = setMaxVolume;
     }
-    
-    //-------------------------------------------------------------------------------------------------
     
     /// <summary>
     /// 音量割合からdB単位へ変更
@@ -101,9 +102,9 @@ public class SoundManager : Singleton<SoundManager>
         return isMute[(int) audioMixerGroupEnum];
     }
     
-    
     //-------------------------------------------------------------------------------------------------
-    //単体でロードから再生までを処理する
+    //共通処理
+    
     
     /// <summary>
     /// 空音源データ作成処理
@@ -133,20 +134,10 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// 再生処理
     /// </summary>
-    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum)
+    private IEnumerator playCoroutine(AudioSource audioSource, float delay, Action endAction = null)
     {
-        AudioSource audioSource = loadAudioSource("", fileName);
+        yield return new WaitForSeconds(delay);
         
-        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
-
-        StartCoroutine(playCoroutine(audioSource, () =>
-        {
-            Destroy(audioSource.gameObject);
-        }));
-    }
-
-    private IEnumerator playCoroutine(AudioSource audioSource, Action endAction = null)
-    {
         audioSource.Play();
 
         while (audioSource.isPlaying)
@@ -156,6 +147,24 @@ public class SoundManager : Singleton<SoundManager>
         endAction?.Invoke();
     }
 
+    
+    //-------------------------------------------------------------------------------------------------
+    //単体でロードから再生までを処理する
+
+    /// <summary>
+    /// 再生処理
+    /// </summary>
+    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
+    {
+        AudioSource audioSource = loadAudioSource("", fileName);
+        
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
+
+        StartCoroutine(playCoroutine(audioSource, delay, () =>
+        {
+            Destroy(audioSource.gameObject);
+        }));
+    }
     //-------------------------------------------------------------------------------------------------
     //一度にロードして保持して置いて、再生する
 
@@ -173,7 +182,7 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// 再生処理
     /// </summary>
-    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum)
+    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
     {
         if (!audioSourceDictionary.ContainsKey(fileName))
         {
@@ -183,9 +192,22 @@ public class SoundManager : Singleton<SoundManager>
 
         audioSourceDictionary[fileName].outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
         
-        StartCoroutine(playCoroutine(audioSourceDictionary[fileName], () =>
+        StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
         {
         }));
     }
 
+    /// <summary>
+    /// 停止処理
+    /// </summary>
+    public void StopFromDictionary(string fileName)
+    {
+        if (!audioSourceDictionary.ContainsKey(fileName))
+        {
+            Debug.LogWarning("PlayFromDictionary not found filename:" + fileName);
+            return;
+        }
+        
+        audioSourceDictionary[fileName].Stop();
+    }
 }

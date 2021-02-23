@@ -9,6 +9,15 @@ using System;
 public class TriggerCallback : MonoBehaviour
 {
 	[SerializeField] TriggerEvent triggerEnterEvent;
+	public Collider collider;
+
+	void Awake()
+	{
+		if (collider == null)
+		{
+			Debug.LogError(this.transform.root.gameObject.name + "以下の" + this.gameObject.name + "にCollider2Dがアタッチされていません。");	
+		}
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{

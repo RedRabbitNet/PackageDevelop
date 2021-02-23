@@ -9,7 +9,6 @@ using System;
 public class TriggerCallback2D : MonoBehaviour
 {
 	[SerializeField] TriggerEvent2D triggerEnterEvent;
-	
 	public Collider2D collider;
 
 	void Awake()
