@@ -127,6 +127,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         GameObject audioSourceObject = new GameObject();
         audioSourceObject.name = "audioSourceObject";
+        DontDestroyOnLoad(audioSourceObject);
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
