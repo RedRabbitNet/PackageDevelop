@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public enum AudioMixerGroupEnum
 {
@@ -35,7 +36,20 @@ public class SoundManager : Singleton<SoundManager>
         audioMixer = Resources.Load<AudioMixer>("AudioMixer");
         audioSourceDictionary = new Dictionary<string, AudioSource>();
         isMute = new bool[Enum.GetNames(typeof(AudioMixerGroupEnum)).Length];
+
+        SceneManager.sceneLoaded += onSceneUnloaded;
         yield return null;
+    }
+
+    /// <summary>
+    /// シーン切り替え時の処理
+    /// </summary>
+    private void onSceneUnloaded(Scene beforeScene, LoadSceneMode loadSceneMode)
+    {
+        /// 再生コルーチンの停止
+        /// あくまでもコルーチンの停止であって音源が停止しないことに注意
+        /// endActionが呼ばれなくなることに注意
+        StopAllCoroutines();
     }
     
     //-------------------------------------------------------------------------------------------------
