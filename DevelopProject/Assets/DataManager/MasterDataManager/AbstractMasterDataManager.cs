@@ -9,7 +9,7 @@ using UnityEngine;
 ///
 /// 新しくデータを追加する際は、MasterDataProviderを生成し、providersに追加するだけで良い。
 /// </summary>
-public abstract class AbstractMasterDataManager : Singleton<AbstractMasterDataManager>
+public abstract class AbstractMasterDataManager<T> : Singleton<T> where T : AbstractMasterDataManager<T>
 {
     protected Dictionary<string, IMasterDataProvider> providers;
 

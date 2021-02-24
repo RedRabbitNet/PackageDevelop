@@ -24,7 +24,9 @@ public class StateMachine<StateEnum> where StateEnum : System.Enum
 
     private Dictionary<StateEnum, Action[]> stepActionList;    //状態ごとのイベント、 遷移段階ごとにActionを設定する
     private StateEnum currentState;
+    public StateEnum CurrentState => currentState;
     private StateEnum beforeState;
+    public StateEnum BeforeState => beforeState;
 
     /// <summary>
     /// StateControllerの初期化

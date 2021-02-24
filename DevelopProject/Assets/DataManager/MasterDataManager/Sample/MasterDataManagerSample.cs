@@ -9,7 +9,7 @@ using UnityEngine;
 ///
 /// 新しくデータを追加する際は、MasterDataProviderを生成し、providersに追加するだけで良い。
 /// </summary>
-public class MasterDataManagerSample : AbstractMasterDataManager
+public class MasterDataManagerSample : AbstractMasterDataManager<MasterDataManagerSample>
 {
     /// <summary> 各種データProvider群 </summary>
     private MasterDataProvider<TestData> masterDataProvider;

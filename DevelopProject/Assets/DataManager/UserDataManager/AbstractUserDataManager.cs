@@ -9,7 +9,7 @@ using UnityEngine;
 ///
 /// 新しくデータを追加する際は、UserDataProviderを生成し、providersに追加するだけで良い。
 /// </summary>
-public abstract class AbstractUserDataManager : Singleton<AbstractUserDataManager>
+public abstract class AbstractUserDataManager<T> : Singleton<T> where T : AbstractUserDataManager<T>
 {
     protected Dictionary<string, IUserDataProvider> providers;
 

@@ -9,7 +9,7 @@ using UnityEngine;
 ///
 /// 新しくデータを追加する際は、UserDataProviderを生成し、providersに追加するだけで良い。
 /// </summary>
-public class UserDataManagerSample : AbstractUserDataManager
+public class UserDataManagerSample : AbstractUserDataManager<UserDataManagerSample>
 {
     /// <summary> 各種データProvider群 </summary>
     private UserDataProvider<UserTestData> testDataProvider;

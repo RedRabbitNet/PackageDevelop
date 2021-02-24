@@ -127,7 +127,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         GameObject audioSourceObject = new GameObject();
         audioSourceObject.name = "audioSourceObject";
-        DontDestroyOnLoad(audioSourceObject);
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
 
         audioSource.playOnAwake = false;
@@ -190,7 +189,9 @@ public class SoundManager : Singleton<SoundManager>
     {
         foreach (string fileName in fileNameList)
         {
-            audioSourceDictionary.Add(fileName, loadAudioSource(directoryPath, fileName));
+            AudioSource audioSourceObject = loadAudioSource(directoryPath, fileName);
+            DontDestroyOnLoad(audioSourceObject);
+            audioSourceDictionary.Add(fileName, audioSourceObject);
         }
     }
 
