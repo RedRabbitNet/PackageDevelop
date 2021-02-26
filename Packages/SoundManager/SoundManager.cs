@@ -22,6 +22,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioMixer audioMixer;
 
     private bool[] isMute;
+    private float percentVolume;
 
     private float minVolume = -20.0f;    //(dB)
     private float maxVolume = 0.0f;      //(dB)
@@ -85,6 +86,7 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     public void SetVolume(AudioMixerGroupEnum audioMixerGroupEnum, float setPercentVolume)
     {
+        percentVolume = setPercentVolume;
         audioMixer.SetFloat(audioMixerGroupEnum.ToString(), ConvertVolumeFromPercent(setPercentVolume));
         
         //TODO setPercentVolumeを0で指定した時でも最小値の音量が鳴ってしまうので、ミュート設定を行う
@@ -106,6 +108,15 @@ public class SoundManager : Singleton<SoundManager>
     public void SetMute(AudioMixerGroupEnum audioMixerGroupEnum, bool setIsMute)
     {
         isMute[(int) audioMixerGroupEnum] = setIsMute;
+
+        if (isMute[(int) audioMixerGroupEnum])
+        {
+            audioMixer.SetFloat(audioMixerGroupEnum.ToString(), 0.0f);   
+        }
+        else
+        {
+            SetVolume(audioMixerGroupEnum, percentVolume);
+        }
     }
 
     /// <summary>
