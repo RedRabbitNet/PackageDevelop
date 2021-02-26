@@ -111,7 +111,7 @@ public class SoundManager : Singleton<SoundManager>
 
         if (isMute[(int) audioMixerGroupEnum])
         {
-            audioMixer.SetFloat(audioMixerGroupEnum.ToString(), 0.0f);   
+            audioMixer.SetFloat(audioMixerGroupEnum.ToString(), -80.0f);   
         }
         else
         {
