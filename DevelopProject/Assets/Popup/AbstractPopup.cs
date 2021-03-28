@@ -32,7 +32,7 @@ public abstract class AbstractPopup : MonoBehaviour
     /// <summary>
     /// 閉じる処理
     /// </summary>
-    public virtual void Cloase()
+    public virtual void Close()
     {
         closeTween.Restart();
     }

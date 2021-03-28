@@ -8,21 +8,32 @@ public class TestEntry : MonoBehaviour
     [SerializeField] private Canvas canvas;
     [SerializeField] private TestPopup popupPrefab;
     private TestPopup popup;
+
+    [SerializeField] private Material transitionMaterial;
     
     IEnumerator Start()
     {
-        popup = Instantiate(popupPrefab, canvas.transform);
-        popup.Initialize();
-        popup.Open();
+        // popup = Instantiate(popupPrefab, canvas.transform);
+        // popup.Initialize();
+        // popup.Open();
+
+        yield return null;
+        
+        TransitionShaderManager.Instance.Initialize(transitionMaterial);
         
         yield return null;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     popup.Cloase();
+        // }
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            popup.Cloase();
+            AppSceneManager.Instance.LoadScene("SampleScene2");
         }
     }
 }
