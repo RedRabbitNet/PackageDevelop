@@ -23,7 +23,6 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
     
     public void Initialize(Material setMaterial)
     {
-        renderTexture = new RenderTexture( Screen.width, Screen.height, 24 );
         transitionMaterial = setMaterial;
 
         transitionCanvasPrefab = Resources.Load<TransitionRenderCanvas>("TransitionRenderCanvas");
@@ -51,6 +50,8 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
     /// </summary>
     public IEnumerator beforeTransitionCoroutine()
     {
+        renderTexture = new RenderTexture( Screen.width, Screen.height, 24 );
+        renderTexture.name = "BeforeTransitionRenderTexture";
         transitionCanvas = Instantiate(transitionCanvasPrefab, this.transform);
         transitionCanvas.SetCanvas(renderTexture, transitionMaterial);
         cameraLinkRendererTexture();
@@ -66,6 +67,7 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
             yield return null;
         }
 
+        cameraUnlinkRendererTexture();
         transitionEnd = true;
     }
 
@@ -74,6 +76,9 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
     /// </summary>
     public IEnumerator afterTransitionCoroutine()
     {
+        renderTexture = new RenderTexture( Screen.width, Screen.height, 24 );
+        renderTexture.name = "AfterTransitionRenderTexture";
+        transitionCanvas.SetCanvas(renderTexture, transitionMaterial);
         cameraLinkRendererTexture();
         Debug.Log("afterTransitionCoroutine");
         while (blendPercentage > blendPercentageBefore)
@@ -85,7 +90,7 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
 
         Debug.Log("blendPercentage" + blendPercentage);
         yield return new WaitForSeconds(1.0f);   //描画終了を待つ
-        // cameraUnlinkRendererTexture();
+        cameraUnlinkRendererTexture();
         Destroy(transitionCanvas.gameObject);
     }
     

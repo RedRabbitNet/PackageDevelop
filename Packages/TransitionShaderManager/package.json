@@ -1,9 +1,9 @@
 {
-  "name" : "com.red-rabbit-net.transition-manager",
-  "displayName" : "TransitionManager",
+  "name" : "com.red-rabbit-net.transition-shader-manager",
+  "displayName" : "TransitionShaderManager",
   "version": "1.0.0",
   "unity" : "2019.3",
-  "description": "ThisisTransitionManager",
+  "description": "ThisisTransitionShaderManager",
   "dependencies": {
     
   }
