@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -236,5 +237,38 @@ public class SoundManager : Singleton<SoundManager>
         }
         
         audioSourceDictionary[fileName].Stop();
+    }
+
+    /// <summary>
+    /// 切り替え処理
+    /// 再生中の音の停止を再生開始を同時に行う
+    /// </summary>
+    public void ChangeFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
+    {
+        if (!audioSourceDictionary.ContainsKey(fileName))
+        {
+            Debug.LogWarning("PlayFromDictionary not found filename:" + fileName);
+            return;
+        }
+
+        AudioMixerGroup targetAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
+        
+        //再生中のすべての音の停止
+        Dictionary<string, AudioSource> playingAudioSourceDictionary
+            = audioSourceDictionary
+                .Where(x => x.Value.outputAudioMixerGroup == targetAudioMixerGroup)
+                .Where(x => x.Value.isPlaying == true)
+                .ToDictionary(x=>x.Key, x=>x.Value);
+        foreach (var audioSourcePair in playingAudioSourceDictionary)
+        {
+            StopFromDictionary(audioSourcePair.Key);
+        }
+        
+        //再生開始
+        audioSourceDictionary[fileName].outputAudioMixerGroup = targetAudioMixerGroup;
+        
+        StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
+        {
+        }));
     }
 }
