@@ -250,7 +250,7 @@ public class SoundManager : Singleton<SoundManager>
     /// 切り替え処理
     /// 再生中の音の停止を再生開始を同時に行う
     /// </summary>
-    public void ChangeFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
+    public void ChangeFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false)
     {
         if (!audioSourceDictionary.ContainsKey(fileName))
         {
@@ -273,6 +273,7 @@ public class SoundManager : Singleton<SoundManager>
         
         //再生開始
         audioSourceDictionary[fileName].outputAudioMixerGroup = targetAudioMixerGroup;
+        audioSourceDictionary[fileName].loop = isLoop;
         
         StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
         {
