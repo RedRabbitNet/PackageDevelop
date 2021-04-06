@@ -163,6 +163,12 @@ public class SoundManager : Singleton<SoundManager>
     private IEnumerator playCoroutine(AudioSource audioSource, float delay, Action endAction = null)
     {
         yield return new WaitForSeconds(delay);
+
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            audioSource.time = 0;
+        }
         
         audioSource.Play();
 
@@ -210,7 +216,7 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// 再生処理
     /// </summary>
-    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
+    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false)
     {
         if (!audioSourceDictionary.ContainsKey(fileName))
         {
@@ -219,6 +225,7 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         audioSourceDictionary[fileName].outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
+        audioSourceDictionary[fileName].loop = isLoop;
         
         StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
         {
