@@ -1,0 +1,16 @@
+{
+    "name": "AdsManagerAssembly",
+    "references": [
+        "GUID:a8ac3e8624bfa40dea301ecbe5d8af87",
+        "GUID:ff6de30450f3748908ff580f6ec64d9a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
