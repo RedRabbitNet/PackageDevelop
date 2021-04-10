@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.custom-playfab",
+  "displayName": "CustomPlayFab",
+  "version": "1.0.0",
+  "unity": "2019.3",
+  "description": "PlayFabSDKを使いやすくカスタマイズしたパッケージ",
+  "dependencies": {}
+}
