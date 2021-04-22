@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEntry : MonoBehaviour
+public class TestEntry : Singleton<TestEntry>
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private TestPopup popupPrefab;
@@ -20,6 +20,7 @@ public class TestEntry : MonoBehaviour
         yield return null;
         
         TransitionShaderManager.Instance.Initialize(transitionMaterial);
+        AppSceneManager.Instance.Initialize();
         
         yield return null;
     }
@@ -30,10 +31,5 @@ public class TestEntry : MonoBehaviour
         // {
         //     popup.Cloase();
         // }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AppSceneManager.Instance.LoadScene("SampleScene2");
-        }
     }
 }

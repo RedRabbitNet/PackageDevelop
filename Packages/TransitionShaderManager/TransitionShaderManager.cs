@@ -14,16 +14,15 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
     private RenderTexture renderTexture;
     private Material transitionMaterial;
     
-    private float blendPercentageBefore = 0.0f;
-    private float blendPercentageAfter = 1.0f;
-    private float blendSpeed = 0.001f;
-    private float blendPercentage;
+    private float transitionTimeCount;
+    private float transitionTime;       //After,Before Transitionにかかる時間 前後の2つで1セットの遷移であるため倍の時間がかかることに注意
     private bool transitionEnd;
     
     
-    public void Initialize(Material setMaterial)
+    public void Initialize(Material setMaterial, float setTransitionTime = 0.5f)
     {
         transitionMaterial = setMaterial;
+        transitionTime = setTransitionTime;
 
         transitionCanvasPrefab = Resources.Load<TransitionRenderCanvas>("TransitionRenderCanvas");
     }
@@ -57,18 +56,19 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
         cameraLinkRendererTexture();
         
         Debug.Log("beforeTransitionCoroutine");
-        blendPercentage = 0;
+        transitionTimeCount = 0;
         transitionEnd = false;
         
-        while (blendPercentage < blendPercentageAfter)
+        while (transitionTimeCount < transitionTime)
         {
-            blendPercentage += blendSpeed;
+            transitionTimeCount += Time.deltaTime;
+            if (transitionTimeCount > transitionTime)
+                transitionTimeCount = transitionTime;
             updateMaterial();
             yield return null;
         }
 
         cameraUnlinkRendererTexture();
-        transitionEnd = true;
     }
 
     /// <summary>
@@ -80,23 +80,27 @@ public class TransitionShaderManager : Singleton<TransitionShaderManager>
         renderTexture.name = "AfterTransitionRenderTexture";
         transitionCanvas.SetCanvas(renderTexture, transitionMaterial);
         cameraLinkRendererTexture();
+        
         Debug.Log("afterTransitionCoroutine");
-        while (blendPercentage > blendPercentageBefore)
+        transitionTimeCount = transitionTime;
+        
+        while (transitionTimeCount > 0)
         {
-            blendPercentage -= blendSpeed;
+            transitionTimeCount -= Time.deltaTime;
+            if (transitionTimeCount < 0)
+                transitionTimeCount = 0;
             updateMaterial();
             yield return null;
         }
 
-        Debug.Log("blendPercentage" + blendPercentage);
-        yield return new WaitForSeconds(1.0f);   //描画終了を待つ
+        // yield return new WaitForSeconds(1.0f);   //描画終了を待つ
         cameraUnlinkRendererTexture();
         Destroy(transitionCanvas.gameObject);
+        transitionEnd = true;
     }
     
     private void updateMaterial()
     {
-        Debug.Log("updateMaterial");
-        transitionMaterial.SetFloat("_BlendPercentage", blendPercentage);
+        transitionMaterial.SetFloat("_BlendPercentage", transitionTimeCount/transitionTime);
     }
 }

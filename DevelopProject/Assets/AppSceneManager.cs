@@ -19,4 +19,26 @@ public class AppSceneManager : Singleton<AppSceneManager>
         yield return StartCoroutine(SceneManagerExtend.Instance.LoadSceneAsyncCoroutine(sceneName, beforeCoroutine));
         StartCoroutine(TransitionShaderManager.Instance.afterTransitionCoroutine());
     }
+
+    public void Initialize()
+    {
+        
+    }
+
+    void Update()
+    {
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     popup.Cloase();
+        // }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            LoadScene("SampleScene2");
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            LoadScene("SampleScene");
+        }
+    }
 }

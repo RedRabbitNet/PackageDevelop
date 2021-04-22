@@ -30,5 +30,5 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_5614019: 0
-    - _BlendPercentage: -0.0009999141
+    - _BlendPercentage: 0
     m_Colors: []
