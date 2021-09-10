@@ -509,10 +509,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfcc7121314b5d94a96688763e3ba45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 111337658}
-  popupPrefab: {fileID: 7448770186032526576, guid: dde19c2dc4645074396e8141e410a77a,
-    type: 3}
-  transitionMaterial: {fileID: 2100000, guid: 0c2c018560319a348a8e1244a483c595, type: 2}
 --- !u!4 &856136242
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,15 @@
+{
+    "name": "ParticleManager",
+    "references": [
+        "GUID:a8ac3e8624bfa40dea301ecbe5d8af87"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

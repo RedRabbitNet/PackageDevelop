@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.particle-manager",
+  "displayName": "ParticleManager",
+  "version": "1.0.0",
+  "unity": "2019.3",
+  "description": "パーティクル機能の実装を簡易化するパッケージ",
+  "dependencies": {}
+}
