@@ -1,0 +1,8 @@
+{
+  "name": "com.red-rabbit-net.display-popup", 
+  "displayName": "DisplayPopup", 
+  "version": "1.0.0", 
+  "unity": "2019.3", 
+  "description": "データ表示、ポップアップに関するパッケージ", 
+  "dependencies": {}
+}

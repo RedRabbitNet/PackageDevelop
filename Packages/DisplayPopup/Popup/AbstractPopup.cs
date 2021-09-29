@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 継承して使用するポップアップクラス
 /// </summary>
-public abstract class AbstractPopup : MonoBehaviour
+public abstract class AbstractPopup : MonoBehaviour, IPopupAnimeation, IDisplay
 {
     protected Sequence openTween;
     protected Sequence closeTween;
@@ -15,8 +15,10 @@ public abstract class AbstractPopup : MonoBehaviour
     /// <summary>
     /// 初期化処理
     /// </summary>
-    public virtual void Initialize()
+    public virtual void InitializeAnimation()
     {
+        openTween = DOTween.Sequence();
+        closeTween = DOTween.Sequence();
         SetOpenTween();
         SetCloseTween();
     }
@@ -26,6 +28,12 @@ public abstract class AbstractPopup : MonoBehaviour
     /// </summary>
     public virtual void Open()
     {
+        if (openTween == null)
+        {
+            Debug.LogWarning("InitializeAnimationが呼ばれていない可能性があります");
+        }
+        
+        
         openTween.Restart();
     }
 
@@ -34,6 +42,11 @@ public abstract class AbstractPopup : MonoBehaviour
     /// </summary>
     public virtual void Close()
     {
+        if (closeTween == null)
+        {
+            Debug.LogWarning("InitializeAnimationが呼ばれていない可能性があります");
+        }
+        
         closeTween.Restart();
     }
 
@@ -58,4 +71,7 @@ public abstract class AbstractPopup : MonoBehaviour
             .SetAutoKill(false)
             .SetLink(gameObject);
     }
+    
+    public abstract void initializeView();
+    public abstract void updateView();
 }
