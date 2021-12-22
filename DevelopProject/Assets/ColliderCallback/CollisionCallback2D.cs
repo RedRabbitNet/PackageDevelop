@@ -9,6 +9,8 @@ using System;
 public class CollisionCallback2D : MonoBehaviour
 {
 	[SerializeField] CollisionEvent2D collisionEnterEvent;
+	[SerializeField] CollisionEvent2D collisionStayEvent;
+	[SerializeField] CollisionEvent2D collisionExitEvent;
 	public Collider2D collider;
 
 	void Awake()
@@ -24,8 +26,28 @@ public class CollisionCallback2D : MonoBehaviour
 		collisionEnterEvent.Invoke(other);
 	}
 
+	private void OnCollisionStay2D(Collision2D other)
+	{
+		collisionStayEvent.Invoke(other);
+	}
+	
+	private void OnCollisionExit2D(Collision2D other)
+	{
+		collisionExitEvent.Invoke(other);
+	}
+
 	public void AddOnCollisionEnterEvent2D(UnityAction<Collision2D> action)
 	{
 		collisionEnterEvent.AddListener(action);
+	}
+
+	public void AddOnCollisionStayEvent2D(UnityAction<Collision2D> action)
+	{
+		collisionStayEvent.AddListener(action);
+	}
+
+	public void AddOnCollisionExitEvent2D(UnityAction<Collision2D> action)
+	{
+		collisionExitEvent.AddListener(action);
 	}
 }

@@ -9,6 +9,8 @@ using System;
 public class CollisionCallback : MonoBehaviour
 {
 	[SerializeField] CollisionEvent collisionEnterEvent;
+	[SerializeField] CollisionEvent collisionStayEvent;
+	[SerializeField] CollisionEvent collisionExitEvent;
 	public Collider collider;
 
 	void Awake()
@@ -24,8 +26,30 @@ public class CollisionCallback : MonoBehaviour
 		collisionEnterEvent.Invoke(other);
 	}
 
+	private void OnCollisionStay(Collision other)
+	{
+		collisionStayEvent.Invoke(other);
+	}
+	
+	private void OnCollisionExit(Collision other)
+	{
+		collisionExitEvent.Invoke(other);
+	}
+
 	public void AddOnCollisionEnterEvent(UnityAction<Collision> action)
 	{
 		collisionEnterEvent.AddListener(action);
 	}
+
+	public void AddOnCollisionStayEvent(UnityAction<Collision> action)
+	{
+		collisionStayEvent.AddListener(action);
+	}
+
+	public void AddOnCollisionExitEvent(UnityAction<Collision> action)
+	{
+		collisionExitEvent.AddListener(action);
+	}
+	
+	
 }

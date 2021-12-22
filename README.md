@@ -1,0 +1,6 @@
+# About
+このリポジトリは汎用ライブラリをUnityPackageとしてインポート可能にしたものです。
+成果物はPackagesから閲覧できます。
+
+# Develop
+DevelopProjectで開発を行い、Packagesフォルダにパッケージをアップロード、TestProjectでインポートして動作確認を行うこととします。

@@ -9,6 +9,8 @@ using System;
 public class TriggerCallback : MonoBehaviour
 {
 	[SerializeField] TriggerEvent triggerEnterEvent;
+	[SerializeField] TriggerEvent triggerStayEvent;
+	[SerializeField] TriggerEvent triggerExitEvent;
 	public Collider collider;
 
 	void Awake()
@@ -24,8 +26,28 @@ public class TriggerCallback : MonoBehaviour
 		triggerEnterEvent.Invoke(other);
 	}
 
+	private void OnTriggerStay(Collider other)
+	{
+		triggerStayEvent.Invoke(other);
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		triggerExitEvent.Invoke(other);
+	}
+
 	public void AddOnTriggerEnterEvent(UnityAction<Collider> action)
 	{
 		triggerEnterEvent.AddListener(action);
+	}
+
+	public void AddOnTriggerStayEvent(UnityAction<Collider> action)
+	{
+		triggerStayEvent.AddListener(action);
+	}
+
+	public void AddOnTriggerExitEvent(UnityAction<Collider> action)
+	{
+		triggerExitEvent.AddListener(action);
 	}
 }
