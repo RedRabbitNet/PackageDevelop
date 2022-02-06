@@ -17,7 +17,10 @@ public class TriggerCallback2D : MonoBehaviour
 	{
 		if (collider == null)
 		{
-			Debug.LogError(this.transform.root.gameObject.name + "以下の" + this.gameObject.name + "にCollider2Dがアタッチされていません。");	
+			collider = GetComponent<Collider2D>();
+
+			if (collider == null)
+				Debug.LogError(this.transform.root.gameObject.name + "以下の" + this.gameObject.name + "にCollider2Dがアタッチされていません。");	
 		}
 	}
 
