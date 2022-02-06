@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 public enum AudioMixerGroupEnum
 {
     BGM,
-    SE
+    SE,
+    Voice
 }
 
 /// <summary>
