@@ -82,7 +82,7 @@ public class ParticleManager : Singleton<ParticleManager>
             if (!particleObjectDictionary.ContainsKey(fileName))
             {
                 //オブジェクトプールに存在しないので追加する
-                particleObject = Instantiate(particleResource, parent);
+                particleObject = Instantiate(particleResource, position, rotation, parent);
                 particleObjectDictionary.Add(fileName,particleObject);
             }
             else
@@ -92,11 +92,8 @@ public class ParticleManager : Singleton<ParticleManager>
         }
         else
         {
-            particleObject = Instantiate(particleResource, parent);
+            particleObject = Instantiate(particleResource, position, rotation, parent);
         }
-        
-        particleObject.transform.localPosition = position;
-        particleObject.transform.localRotation = rotation;
         
         return particleObject;
     }
