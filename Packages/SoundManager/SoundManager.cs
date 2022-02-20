@@ -31,6 +31,9 @@ public class SoundManager : Singleton<SoundManager>
 
     private Dictionary<string, AudioSource> audioSourceDictionary;    //<filename, AudioSource>
 
+    private const float defaultAudioSourceVolume = 1.0f;
+    private const float defaultAudioSourcePitch = 1.0f;
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -146,16 +149,32 @@ public class SoundManager : Singleton<SoundManager>
 
         return audioSource;
     }
+
+    /// <summary>
+    /// 音源データの初期設定
+    /// </summary>
+    private void audioSourceInitialize(AudioSource audioSource)
+    {
+        audioSource.playOnAwake = false;
+        audioSource.time = 0;
+        audioSource.volume = defaultAudioSourceVolume;
+        audioSource.pitch = defaultAudioSourcePitch;
+    }
+
+    /// <summary>
+    /// 音源データの設定
+    /// </summary>
+    private void audioSourceSetParam(AudioSource audioSource, float volume, float pitch)
+    {
+        
+    }
     
     /// <summary>
     /// 音源データの読み込み処理
     /// </summary>
-    private AudioSource loadAudioSource(string directoryPath, string fileName)
+    private AudioClip loadAudioClip(string directoryPath, string fileName)
     {
-        AudioSource audioSource = createAudioSource();
-        audioSource.clip = Resources.Load<AudioClip>(directoryPath + fileName);
-
-        return audioSource;
+        return Resources.Load<AudioClip>(directoryPath + fileName);
     }
 
     /// <summary>
@@ -187,14 +206,20 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// 再生処理
     /// </summary>
-    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f)
+    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, float volume = defaultAudioSourceVolume, float pitch = defaultAudioSourcePitch)
     {
-        AudioSource audioSource = loadAudioSource("", fileName);
+        AudioSource audioSource = createAudioSource();
+        audioSource.clip = loadAudioClip("", fileName);
         
         audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
 
+        audioSourceSetParam(audioSource, volume, pitch);
+        
+
         StartCoroutine(playCoroutine(audioSource, delay, () =>
         {
+            //どうせ破棄するので要らない
+            // audioSourceInitialize(audioSource);
             Destroy(audioSource.gameObject);
         }));
     }
@@ -208,16 +233,17 @@ public class SoundManager : Singleton<SoundManager>
     {
         foreach (string fileName in fileNameList)
         {
-            AudioSource audioSourceObject = loadAudioSource(directoryPath, fileName);
-            DontDestroyOnLoad(audioSourceObject);
-            audioSourceDictionary.Add(fileName, audioSourceObject);
+            AudioSource audioSource = createAudioSource();
+            audioSource.clip = loadAudioClip("", fileName);
+            DontDestroyOnLoad(audioSource);
+            audioSourceDictionary.Add(fileName, audioSource);
         }
     }
 
     /// <summary>
     /// 再生処理
     /// </summary>
-    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false)
+    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false, float volume = defaultAudioSourceVolume, float pitch = defaultAudioSourcePitch)
     {
         if (!audioSourceDictionary.ContainsKey(fileName))
         {
@@ -225,11 +251,16 @@ public class SoundManager : Singleton<SoundManager>
             return;
         }
 
-        audioSourceDictionary[fileName].outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
-        audioSourceDictionary[fileName].loop = isLoop;
+        AudioSource audioSource = audioSourceDictionary[fileName];
+
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(audioMixerGroupEnum.ToString())[0];
+        audioSource.loop = isLoop;
         
-        StartCoroutine(playCoroutine(audioSourceDictionary[fileName], delay, () =>
+        audioSourceSetParam(audioSource, volume, pitch);
+        
+        StartCoroutine(playCoroutine(audioSource, delay, () =>
         {
+            audioSourceInitialize(audioSource);
         }));
     }
 
