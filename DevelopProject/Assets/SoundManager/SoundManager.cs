@@ -166,7 +166,8 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private void audioSourceSetParam(AudioSource audioSource, float volume, float pitch)
     {
-        
+        audioSource.volume = volume;
+        audioSource.pitch = pitch;
     }
     
     /// <summary>
@@ -174,7 +175,13 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private AudioClip loadAudioClip(string directoryPath, string fileName)
     {
-        return Resources.Load<AudioClip>(directoryPath + fileName);
+        AudioClip audioClip = Resources.Load<AudioClip>(directoryPath + fileName);
+        if (audioClip == null)
+        {
+            Debug.LogWarning("loadAudioClip missing:" + directoryPath + fileName);   
+        }
+        
+        return audioClip;
     }
 
     /// <summary>
@@ -234,7 +241,7 @@ public class SoundManager : Singleton<SoundManager>
         foreach (string fileName in fileNameList)
         {
             AudioSource audioSource = createAudioSource();
-            audioSource.clip = loadAudioClip("", fileName);
+            audioSource.clip = loadAudioClip(directoryPath, fileName);
             DontDestroyOnLoad(audioSource);
             audioSourceDictionary.Add(fileName, audioSource);
         }
