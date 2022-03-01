@@ -26,7 +26,7 @@ public class SoundManager : Singleton<SoundManager>
     private bool[] isMute;
     private float percentVolume;
 
-    private float minVolume = -20.0f;    //(dB)
+    private float minVolume = -96.0f;    //(dB)
     private float maxVolume = 0.0f;      //(dB)
 
     private Dictionary<string, AudioSource> audioSourceDictionary;    //<filename, AudioSource>
@@ -75,7 +75,7 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private float ConvertVolumeFromPercent(float percentVolume)
     {
-        return Mathf.Lerp(minVolume, maxVolume, percentVolume);
+        return Mathf.Clamp(Mathf.Log10(Mathf.Clamp(percentVolume, 0f, 1f)) * 20.0f, minVolume, maxVolume);
     }
     
     /// <summary>
@@ -83,7 +83,11 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private float ConvertPercentFromVolume(float volume)
     {
-        return Mathf.InverseLerp(minVolume, maxVolume, volume);
+        //0除算回避
+        if (volume == 0.0f)
+            return 1.0f;
+        
+        return Mathf.Pow(10,volume / 20.0f);
     }
 
     /// <summary>
