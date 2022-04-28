@@ -26,9 +26,16 @@ public class TestEntry : Singleton<TestEntry>
         // ParticleManager.Instance.Play("BlueParticle");
 
         yield return StartCoroutine(SoundManager.Instance.InitializeCoroutine());
-        SoundManager.Instance.SetVolume(AudioMixerGroupEnum.BGM, 0.2f);
-        SoundManager.Instance.PlayWithLoad("test", AudioMixerGroupEnum.BGM,0,1.0f,2.0f);
-        Debug.Log(SoundManager.Instance.GetVolume(AudioMixerGroupEnum.BGM));
+        SoundManager.Instance.SetVolume(AudioMixerGroupEnum.SE, 1.00f);
+
+        for (int i = 0; i < SoundManager.Instance.ScalePitchCount; i++)
+        {
+            SoundManager.Instance.PlayWithLoad("piano_c", AudioMixerGroupEnum.SE,0,1.0f, i);
+            yield return new WaitForSeconds(2.0f);
+        }
+        
+        
+        Debug.Log(SoundManager.Instance.GetVolume(AudioMixerGroupEnum.SE));
 
         //MonoBehaviour継承クラスをnewしてパラメータだけのコピーが出来るかのテスト
         // AudioSource originSource = new AudioSource();

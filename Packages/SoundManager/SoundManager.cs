@@ -33,6 +33,19 @@ public class SoundManager : Singleton<SoundManager>
 
     private const float defaultAudioSourceVolume = 1.0f;
     private const float defaultAudioSourcePitch = 1.0f;
+    
+    private List<float> scalePirch = new List<float>()
+    {
+        1.0f,
+        1.125f,
+        1.2599f,
+        1.3348f,
+        1.4983f,
+        1.6818f,
+        1.8877f,
+        2.0f,
+    };
+    public int ScalePitchCount => scalePirch.Count;
 
     /// <summary>
     /// 初期化
@@ -97,8 +110,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         percentVolume = setPercentVolume;
         audioMixer.SetFloat(audioMixerGroupEnum.ToString(), ConvertVolumeFromPercent(setPercentVolume));
-        
-        //TODO setPercentVolumeを0で指定した時でも最小値の音量が鳴ってしまうので、ミュート設定を行う
     }
 
     /// <summary>
@@ -234,6 +245,11 @@ public class SoundManager : Singleton<SoundManager>
             Destroy(audioSource.gameObject);
         }));
     }
+    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
+    {
+        PlayWithLoad(fileName, audioMixerGroupEnum, delay, volume, scalePirch[scalePitchIndex]);
+    }
+    
     //-------------------------------------------------------------------------------------------------
     //一度にロードして保持して置いて、再生する
 
@@ -273,6 +289,10 @@ public class SoundManager : Singleton<SoundManager>
         {
             audioSourceInitialize(audioSource);
         }));
+    }
+    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
+    {
+        PlayFromDictionary(fileName, audioMixerGroupEnum, delay, isLoop, volume, scalePirch[scalePitchIndex]);
     }
 
     /// <summary>

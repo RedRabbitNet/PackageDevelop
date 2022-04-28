@@ -105,6 +105,8 @@ AudioMixerController:
     name: BGM
   - guid: 737a609abd583104a9e462b201179d61
     name: SE
+  - guid: e5de166fd85e87d4280962b31c31c22f
+    name: Voice
   m_AudioMixerGroupViews:
   - guids:
     - d670e71857b91dd4b99d1a3d24c9eb00
@@ -160,6 +162,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: ff448d6e85e28fc4bbf87be662fde955
   m_FloatValues:
+    ede0b8ccf51ba4142897fa4028bba963: 0.997
     5bc1a7ff49f72444697432a04a589263: 0.04171297
   m_TransitionOverrides: {}
 --- !u!244 &1263862985945737421
