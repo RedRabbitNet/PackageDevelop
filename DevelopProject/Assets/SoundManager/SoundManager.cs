@@ -245,7 +245,7 @@ public class SoundManager : Singleton<SoundManager>
             Destroy(audioSource.gameObject);
         }));
     }
-    public void PlayWithLoad(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
+    public void PlayWithLoadPitchIndex(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
     {
         PlayWithLoad(fileName, audioMixerGroupEnum, delay, volume, scalePirch[scalePitchIndex]);
     }
@@ -290,7 +290,7 @@ public class SoundManager : Singleton<SoundManager>
             audioSourceInitialize(audioSource);
         }));
     }
-    public void PlayFromDictionary(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
+    public void PlayFromDictionaryPitchIndex(string fileName, AudioMixerGroupEnum audioMixerGroupEnum, float delay = 0.0f, bool isLoop = false, float volume = defaultAudioSourceVolume, int scalePitchIndex = 0)
     {
         PlayFromDictionary(fileName, audioMixerGroupEnum, delay, isLoop, volume, scalePirch[scalePitchIndex]);
     }
