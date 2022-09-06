@@ -109,7 +109,7 @@ public class StateMachine<StateEnum> where StateEnum : System.Enum
             Debug.LogError("既にステートが設定されています");
         }
 
-        Action[] stepAction = new Action[Enum.GetNames(typeof(StateEnum)).Length];
+        Action[] stepAction = new Action[Enum.GetNames(typeof(StateStepEnum)).Length];
         if (startAction != null)
         {
             stepAction[(int)StateStepEnum.Start] = startAction;
