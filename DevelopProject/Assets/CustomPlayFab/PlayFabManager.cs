@@ -29,14 +29,18 @@ public class PlayFabManager : Singleton<PlayFabManager>
 		//ログインを行う
 		var loginFunction = new CustomPlayFabFunction<LoginWithCustomIDRequest, LoginResult>();
 
-		string uniqueId = SystemInfo.deviceUniqueIdentifier + System.Guid.NewGuid ().ToString();
-#if  UNITY_WEBGL 
-		uniqueId += DateTime.Now.ToString();
+		string uniqueId;
+#if UNITY_ANDROID || UNITY_IOS
+		uniqueId = SystemInfo.deviceUniqueIdentifier;
+#elif UNITY_WEBGL 
+		uniqueId = System.Guid.NewGuid().ToString();
+#elif UNITY_EDITOR
+		uniqueId = DateTime.Now.ToString();
 #endif
 		var request = new LoginWithCustomIDRequest { CustomId = uniqueId, CreateAccount = true };
 		loginFunction.SetRequest = request;
 		yield return StartCoroutine(loginFunction.ExecuteCoroutine(PlayFabClientAPI.LoginWithCustomID));
-		Debug.Log("PlayFabLogin");
+		Debug.Log("PlayFabLogin" +  JsonUtility.ToJson(loginFunction.GetResult));
 		isLogin = true;
 	}
 
