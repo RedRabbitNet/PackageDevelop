@@ -45,11 +45,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	/// </summary>
 	public IEnumerator PlayFabUpdateTitleDisplayName(string displayName)
 	{
-		if (!isLogin)
-		{
-			Debug.LogWarning("Error:PlayFab not Login");
-			yield break;
-		}
+		yield return new WaitUntil(()=> isLogin);
 
 		var updateTitleDisplayNameFunction = new CustomPlayFabFunction<UpdateUserTitleDisplayNameRequest, UpdateUserTitleDisplayNameResult>();
 		var request = new UpdateUserTitleDisplayNameRequest(){ DisplayName = displayName };
@@ -64,11 +60,7 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	/// </summary>
 	public IEnumerator PlayFabGetInventory()
 	{
-		if (!isLogin)
-		{
-			Debug.LogWarning("Error:PlayFab not Login");
-			yield break;
-		}
+		yield return new WaitUntil(()=> isLogin);
 
 		var getInventoryFunction = new CustomPlayFabFunction<GetUserInventoryRequest, GetUserInventoryResult>();
 		var request = new GetUserInventoryRequest();
@@ -112,6 +104,8 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	/// </summary>
 	public IEnumerator PlayFabUpdatePlayerStatistics(string stasticName, int score)
 	{
+		yield return new WaitUntil(()=> isLogin);
+		
 		var updateStatisticsFunction = new CustomPlayFabFunction<UpdatePlayerStatisticsRequest, UpdatePlayerStatisticsResult>();
 		var request 
 			= new UpdatePlayerStatisticsRequest
@@ -136,6 +130,8 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	/// </summary>
 	public IEnumerator PlayFabGetLeaderboard(string stasticName, int startPosition, int maxResultsCount)
 	{
+		yield return new WaitUntil(()=> isLogin);
+		
 		var getLeaderBoardFunction = new CustomPlayFabFunction<GetLeaderboardRequest, GetLeaderboardResult>();
 		var request 
 			= new GetLeaderboardRequest
@@ -156,6 +152,8 @@ public class PlayFabManager : Singleton<PlayFabManager>
 	/// </summary>
 	public IEnumerator PlayFabGetLeaderboardAroundPlayer(string stasticName, int maxResultsCount)
 	{
+		yield return new WaitUntil(()=> isLogin);
+		
 		var getLeaderBoardFunction = new CustomPlayFabFunction<GetLeaderboardAroundPlayerRequest, GetLeaderboardAroundPlayerResult>();
 		var request 
 			= new GetLeaderboardAroundPlayerRequest
