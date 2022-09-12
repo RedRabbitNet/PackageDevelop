@@ -29,9 +29,9 @@ public class PlayFabManager : Singleton<PlayFabManager>
 		//ログインを行う
 		var loginFunction = new CustomPlayFabFunction<LoginWithCustomIDRequest, LoginResult>();
 
-		string uniqueId = SystemInfo.deviceUniqueIdentifier;
-#if  UNITY_WEBGL
-		uniqueId += System.Guid.NewGuid ().ToString();
+		string uniqueId = SystemInfo.deviceUniqueIdentifier + System.Guid.NewGuid ().ToString();
+#if  UNITY_WEBGL 
+		uniqueId += DateTime.Now.ToString();
 #endif
 		var request = new LoginWithCustomIDRequest { CustomId = uniqueId, CreateAccount = true };
 		loginFunction.SetRequest = request;
