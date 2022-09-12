@@ -28,7 +28,12 @@ public class PlayFabManager : Singleton<PlayFabManager>
 
 		//ログインを行う
 		var loginFunction = new CustomPlayFabFunction<LoginWithCustomIDRequest, LoginResult>();
-		var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
+
+		string uniqueId = SystemInfo.deviceUniqueIdentifier;
+#if  UNITY_WEBGL
+		uniqueId += System.Guid.NewGuid ().ToString();
+#endif
+		var request = new LoginWithCustomIDRequest { CustomId = uniqueId, CreateAccount = true };
 		loginFunction.SetRequest = request;
 		yield return StartCoroutine(loginFunction.ExecuteCoroutine(PlayFabClientAPI.LoginWithCustomID));
 		Debug.Log("PlayFabLogin");
