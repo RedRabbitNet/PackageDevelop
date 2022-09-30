@@ -13,8 +13,8 @@ public class RuntimeDataProvider<DataType> : IRuntimeDataProvider<DataType>
     public List<DataType> DataList { get; set; }
     private string dataPath;
 
-    public RuntimeDataProvider(string path)
+    public RuntimeDataProvider()
     {
-        dataPath = path;
+        DataList = new List<DataType>();
     }
 }
